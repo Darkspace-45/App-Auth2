@@ -4,7 +4,6 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../config/Config';
 
 export default function LoginScreen({ navigation }: any) {
-
     const [correo, setCorreo] = useState('');
     const [contraseña, setContraseña] = useState('');
 
@@ -12,7 +11,7 @@ export default function LoginScreen({ navigation }: any) {
         signInWithEmailAndPassword(auth, correo, contraseña)
             .then((userCredential) => {
                 const user = userCredential.user;
-                setCorreo('');            
+                setCorreo('');
                 setContraseña('');
                 navigation.navigate('Welcome');
             })
@@ -43,49 +42,74 @@ export default function LoginScreen({ navigation }: any) {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>Login</Text>
+            <Text style={styles.title}>Iniciar Sesión</Text>
             <TextInput
-                placeholder='Introducir Correo'
+                placeholder='Correo electrónico'
+                placeholderTextColor="#ccc"
+                value={correo}
                 onChangeText={setCorreo}
                 style={styles.input} />
             <TextInput
-                placeholder='Introducir Contraseña'
+                placeholder='Contraseña'
+                placeholderTextColor="#ccc"
+                value={contraseña}
                 onChangeText={setContraseña}
                 style={styles.input}
                 secureTextEntry={true}
             />
-            <Button title='Ingresar' onPress={() => login()} />
+            <TouchableOpacity style={styles.button} onPress={login}>
+                <Text style={styles.buttonText}>Ingresar</Text>
+            </TouchableOpacity>
             <TouchableOpacity onPress={() => { navigation.navigate('Register'); }}>
-                <Text style={styles.reg}>Crear una cuenta</Text>
+                <Text style={styles.link}>Crear una cuenta</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => { navigation.navigate('Restablecer'); }}>
-                <Text style={styles.reg}>Restablecer contraseña</Text>
+                <Text style={styles.link}>¿Olvidaste tu contraseña?</Text>
             </TouchableOpacity>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    input: {
-        fontSize: 20,
-        margin: 10,
-        height: 50,
-        backgroundColor: '#86999c',
-        borderRadius: 20,
-        paddingHorizontal: 10
-    },
     container: {
         flex: 1,
-        justifyContent: 'center'
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#f5f5f5',
+        padding: 20,
     },
-    text: {
-        fontSize: 30,
-        textAlign: 'center',
-        fontWeight: 'bold'
+    title: {
+        fontSize: 32,
+        fontWeight: 'bold',
+        marginBottom: 20,
+        color: '#333',
     },
-    reg: {
-        color: 'blue',
-        fontSize: 15,
-        textAlign: 'center'
-    }
+    input: {
+        width: '90%',
+        height: 50,
+        backgroundColor: '#e8e8e8',
+        borderRadius: 10,
+        paddingHorizontal: 15,
+        fontSize: 18,
+        marginVertical: 10,
+    },
+    button: {
+        width: '90%',
+        height: 50,
+        backgroundColor: '#007AFF',
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginVertical: 10,
+    },
+    buttonText: {
+        color: '#fff',
+        fontSize: 18,
+        fontWeight: '600',
+    },
+    link: {
+        color: '#007AFF',
+        fontSize: 16,
+        marginTop: 10,
+    },
 });
