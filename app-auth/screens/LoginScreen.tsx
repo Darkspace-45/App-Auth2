@@ -12,6 +12,8 @@ export default function LoginScreen({ navigation }: any) {
         signInWithEmailAndPassword(auth, correo, contraseña)
             .then((userCredential) => {
                 const user = userCredential.user;
+                setCorreo('');            
+                setContraseña('');
                 navigation.navigate('Welcome');
             })
             .catch((error) => {
